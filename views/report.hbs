@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>WeatherStorm</title>
+	
+</head>
+<body>
+{{> header}}
+<h3>Enter Your City Name</h3>
+<input id="cityid" type="text" name="text" placeholder="enter your city name">
+<input type="button" name="button" id="bttnid" value="Search">
+<div id="display_result"></div>
+	
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#bttnid').click(function(){
+		var city = $('#cityid').val();
+		if(city != ''){
+			$.ajax({
+				url :'http://api.openweathermap.org/data/2.5/weather?q=' + city +"&units=metric" + "&APIKEY=ddcac270663ae17ecc4be2b254c80b43",
+				type : "GET",
+				dataType: "json",
+				success : function(data){
+					      result = display(data);
+            $('#display_result').html(result);
+            $('#cityid').val('');
+
+                       //console.log(data);
+                       
+
+
+
+
+
+				}
+			})
+		}else{
+			console.log("cant show");
+		}
+	})
+	});
+
+function display(data){
+  return "<h3><strong>Temperature</strong>: "+ data.main.temp +" </h3>" + "<h3><strong>Pressure</strong>: "+ data.main.pressure +" </h3>" + "<h3><strong>Humidity</strong>: "+ data.main.humidity +" </h3>"
+}
+
+</script>
+
+
+
+
+</body>
+</html>
